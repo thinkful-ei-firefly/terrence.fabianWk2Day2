@@ -65,6 +65,12 @@ function toggleCheckedForListItem(itemId) {
   item.checked = !item.checked;
 }
 
+function deleteListItem(itemId){
+  console.log('Deleting property for item with id ' + itemId);
+  const index = STORE.findIndex(item => item.id === itemId);
+  STORE.splice(index, 1);
+}
+
 
 function getItemIdFromElement(item) {
   return $(item)
@@ -85,7 +91,12 @@ function handleItemCheckClicked() {
 function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
   // item
-  console.log('`handleDeleteItemClicked` ran')
+  $('.js-shopping-list').on('click', '.js-item-delete', event => {
+    console.log('`handleDeleteItemClicked` ran');
+    const id = getItemIdFromElement(event.currentTarget);
+    deleteListItem(id);
+    renderShoppingList();
+  });
 }
 
 // this function will be our callback when the page loads. it's responsible for
